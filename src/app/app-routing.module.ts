@@ -4,8 +4,8 @@ import { PostComponent } from './controler/post/post.component';
 import { HomeComponent } from './home/home/home.component';
 
 const routes: Routes = [
+  {path: '', component: HomeComponent},
   {path: 'post', component: PostComponent},
-  {path: '/', component: HomeComponent},
 ];
 
 @NgModule({
