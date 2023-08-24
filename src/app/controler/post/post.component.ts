@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Post } from 'src/app/model/Post';
 import { PostService } from 'src/app/service/post.service';
 
@@ -14,18 +11,28 @@ export class PostComponent  implements OnInit{
   listPost: Post[] = [];
   newPost: Post = { id: 0, description:""};
   idPost: number = 0;
-  filteredTableData = [...this.listPost];
+  searchTerm: any;
+  filteredItems = this.listPost;
 
   constructor(private postService: PostService){}
 
   ngOnInit(): void {
-
-    this.getPostsAll();
+    this.getPostsAll();  
+  }
+  searchItems(): void {
+    if (this.searchTerm.trim() !== '') {
+      this.filteredItems = this.listPost.filter(item =>
+        item.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredItems = this.listPost;
+    }
   }
   
-  public getPostsAll(){
+  public getPostsAll(){    
       return this.postService.getPost().subscribe(data =>{
         this.listPost = data
+        this.filteredItems = this.listPost;
       }
       
   )}
@@ -35,12 +42,6 @@ export class PostComponent  implements OnInit{
       this.getPostsAll();
     }
     )
-  }
-  filterTable(event: any): void {
-    const value = event.target.value.toLowerCase();
-    this.filteredTableData = this.listPost.filter(row =>
-      (value) !== -1
-    );
   }
     public finByIdControler(id:number){
       return this.postService.findById(id).subscribe(data =>{
