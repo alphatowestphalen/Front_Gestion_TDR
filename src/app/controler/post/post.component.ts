@@ -20,6 +20,8 @@ export class PostComponent  implements OnInit{
     this.getPostsAll();  
   }
   searchItems(): void {
+    console.log(this.searchTerm.trim());
+    
     if (this.searchTerm.trim() !== '') {
       this.filteredItems = this.listPost.filter(item =>
         item.description.toLowerCase().includes(this.searchTerm.toLowerCase())

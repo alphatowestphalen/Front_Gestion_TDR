@@ -8,6 +8,7 @@ import { PostComponent } from './controler/post/post.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { HomeComponent } from './home/home/home.component';
 import { FormsModule } from '@angular/forms';
+import { DashboardComponent } from './controler/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     PostComponent,
     SidebarComponent,
     HomeComponent,
+    DashboardComponent,
   ],
   imports: [
     FormsModule,
