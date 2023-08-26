@@ -13,14 +13,20 @@ export class PostComponent  implements OnInit{
   idPost: number = 0;
   searchTerm: any;
   filteredItems = this.listPost;
+  dataPagination = this.listPost ;
+  pageSize : number = 5;   
+  pageCount : number =0;   
+  currentPage = 1; // Current page number
+
+
 
   constructor(private postService: PostService){}
 
   ngOnInit(): void {
-    this.getPostsAll();  
+    this.getPostsAll();
+    this.getNbrPagination();
   }
   searchItems(): void {
-    console.log(this.searchTerm.trim());
     
     if (this.searchTerm.trim() !== '') {
       this.filteredItems = this.listPost.filter(item =>
@@ -30,13 +36,16 @@ export class PostComponent  implements OnInit{
       this.filteredItems = this.listPost;
     }
   }
-  
+  // getPagination(data:any[]): any[] {
+  //   const start = (this.currentPage - 1) * this.pageSize;
+  //   const end = start + this.pageSize;
+  //   return data.slice(start, end);
+  // }
   public getPostsAll(){    
       return this.postService.getPost().subscribe(data =>{
         this.listPost = data
-        this.filteredItems = this.listPost;
+        this.filteredItems = data;
       }
-      
   )}
   
   public savePost( ):void {
@@ -71,5 +80,17 @@ export class PostComponent  implements OnInit{
         this.newPost.id = data.id + 1; 
       })
   }
-  
+  public getNbrPagination() {
+    this.postService.getPost().subscribe(data => {
+      this.dataPagination = data; 
+      this.pageSize = Math.ceil(this.dataPagination.length / 5); 
+    });
+  }  
+
+  getPaginationArray(): number[] {
+    this.postService.getPost().subscribe(data => {
+      this.pageCount = Math.ceil(data.length / this.pageSize);
+    });
+    return Array.from({ length: this.pageCount }, (_, index) => index + 1);
+  }
 }
