@@ -27,7 +27,6 @@ export class PostComponent  implements OnInit{
     this.getNbrPagination();
   }
   searchItems(): void {
-    
     if (this.searchTerm.trim() !== '') {
       this.filteredItems = this.listPost.filter(item =>
         item.description.toLowerCase().includes(this.searchTerm.toLowerCase())

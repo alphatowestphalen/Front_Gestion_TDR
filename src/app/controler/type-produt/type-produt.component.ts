@@ -9,19 +9,51 @@ import { TypeProductService } from 'src/app/service/typeProduct/type-product.ser
 })
 export class TypeProdutComponent implements OnInit {
 listeTypeProduct: TypeProduct[] = [];
+delateMessage: String = "";
+newType =  { id: 0, descripitonType:""};
+searcheType:any;
+fileterType=this.listeTypeProduct;
 
 constructor(private typeProductService: TypeProductService) { }
 
 ngOnInit(): void {
   this.getTypeProductAll();
 }
-getTypeProductAll(){
-  return this.typeProductService.getTypeProductAll().subscribe(data=>{
+public getTypeProductAll(){
+  this.typeProductService.getTypeProductAll().subscribe(data=>{
     this.listeTypeProduct = data;
-    console.log('====================================');
-    console.log(this.listeTypeProduct);
-    console.log('====================================');
+    this.fileterType = data;
   })
+}
+
+public delateType(id:number){
+  this.typeProductService.delateType(id).subscribe(()=>{
+      this.getTypeProductAll();
+  });
+}
+
+public getEndId(){
+  this.newType  = {id:1, descripitonType:""}
+  return this.typeProductService.findEndId().subscribe(data =>{
+    this.newType.id = data.id + 1;
+  })
+}
+public saveType( ):void {
+  this.typeProductService.saveTypeProduct(this.newType).subscribe((data) => {
+    this.getTypeProductAll();
+  })
+}
+
+public setTypeProduct():void{
+  if (this.searcheType.trim() !=='') {
+    console.log('====================================');
+    console.log("in thise cherche");
+    console.log('====================================');
+      this.fileterType = this.listeTypeProduct.filter(item => item.descripitonType.toLocaleLowerCase().includes(this.searcheType.toLocaleLowerCase()))
+  }
+  else{
+    this.fileterType = this.listeTypeProduct;
+  }
 }
 
 }

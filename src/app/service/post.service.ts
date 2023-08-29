@@ -37,7 +37,7 @@ export class PostService {
 
 // delete poste
   DeletePostService(id: number){
-    return this._http.delete <Post[]>(this._url+ "/post/"+id);
+    return this._http.delete <Post>(this._url+ "/post/"+id);
   }
 
 // findLatestPost

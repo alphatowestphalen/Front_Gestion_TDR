@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Type } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TypeProduct } from 'src/app/model/TypeProduct';
 import { environment } from 'src/environment/environement';
 
@@ -14,5 +15,17 @@ export class TypeProductService {
 
   public getTypeProductAll(){
     return this._http.get<TypeProduct[]>(this._url + "/typeProduct");
+  }
+
+  public delateType( id: number){
+    return this._http.delete<TypeProduct[]>(this._url + "/typeProduct/"+ id);
+  }
+
+  public  findEndId():Observable<TypeProduct>{
+    return this._http.get<TypeProduct>(this._url + "/typeProduct/findLastType");
+  }
+
+  public saveTypeProduct(type: TypeProduct): Observable<TypeProduct>{
+    return this._http.post<TypeProduct>(this._url + "/typeProduct", type);
   }
 }

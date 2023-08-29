@@ -12,7 +12,7 @@
               <div class="row g-4 mb-3">
                 <div class="col-sm-auto">
                   <div>
-                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn"
+                    <button type="button" (click)="getEndId()" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn"
                       data-bs-target="#showModal">
                       <i class="ri-add-line align-bottom me-1"></i> Ajouter
                     </button>
@@ -21,7 +21,7 @@
                 <div class="col-sm">
                   <div class="d-flex justify-content-sm-end">
                     <div class="search-box ms-2">
-                      <input type="text" class="form-control search"   placeholder="Search..." />
+                      <input type="text" class="form-control search"   [(ngModel)]="searcheType"  (input)="setTypeProduct()"  placeholder="Search..." />
                       <i class="ri-search-line search-icon"></i>
                     </div>
                   </div>
@@ -37,7 +37,7 @@
                       <th class="sort" data-sort="action">Action</th>
                     </tr>
                   </thead>
-                  <tbody *ngFor="let item of listeTypeProduct"  class="list form-check-all">
+                  <tbody *ngFor="let item of fileterType"  class="list form-check-all">
                     <tr >
                       <td class="customer_name">T{{item.id}}</td>
                       <td class="customer_name">{{item.descripitonType}}</td>
@@ -51,7 +51,7 @@
                           </div>
                           <div class="remove">
                             <!-- <a routerLink={{p.id}}> -->
-                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal"
+                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" 
                               data-bs-target="#deleteRecordModal">
                               Supprimer
                             </button>
@@ -68,7 +68,7 @@
                                       <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
                                         <h4>Are you Sure ?</h4>
                                         <p class="text-muted mx-4 mb-0">
-                                          Are you Sure You want to Remove this
+                                          Are you Sure You want to Remove this {{item.id}}
                                           Record ?
                                         </p>
                                       </div>
@@ -77,7 +77,7 @@
                                       <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">
                                         Close
                                       </button>
-                                      <button type="button" class="btn w-sm btn-danger"
+                                      <button type="button" (click)="delateType(item.id)" class="btn w-sm btn-danger"
                                          data-bs-dismiss="modal">
                                         Yes, Delete It!
                                       </button>
@@ -133,7 +133,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <div *ngIf="listeTypeProduct == null" class="noresult">
+                <div *ngIf="listeTypeProduct.length== 0" class="noresult">
                   <div class="text-center">
                     <h5 class="mt-2">Sorry! No Result Found</h5>
                     <p class="text-muted mb-0">
@@ -144,7 +144,7 @@
                 </div>
               </div>
   
-              <div class="d-flex justify-content-end">
+              <div *ngIf="listeTypeProduct.length != 0" class="d-flex justify-content-end">
                 <div  class="pagination-wrap hstack gap-2" style="display: flex">
                   
                   <a class="page-item pagination-prev disabled" href="#">
@@ -180,15 +180,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form #addForm="ngForm" >
+            <form  #addForm="ngForm" (ngSubmit)="saveType()">
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Code Type des Produits</label>
-                <input type="text" class="form-control" id="recipient-name"name="id"
+                <input type="text" ngModel="{{newType.id}}" class="form-control" id="recipient-name"name="id"
                   placeholder="P001" readonly="" />
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Type des Produits</label>
-                <textarea class="form-control"  name="description"
+                <textarea [(ngModel)]="newType.descripitonType" class="form-control"   name="descripitonType"
                   id="message-text"></textarea>
               </div>
               <div class="modal-footer">
