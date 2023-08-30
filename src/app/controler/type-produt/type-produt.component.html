@@ -45,7 +45,7 @@
                         <div class="d-flex gap-2">
                           <div class="edit">
                             <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal"
-                              data-bs-target="#showModalUpdate">
+                              data-bs-target="#showModalUpdate" (click)="findById(item.id)">
                               Edit
                             </button>
                           </div>
@@ -100,16 +100,15 @@
                                       aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body">
-                                    <form  #addForm="ngForm" >
+                                    <form  #addForm="ngForm" (ngSubmit)="updateTypeProduct()">
                                       <div class="mb-3">
                                         <label for="recipient-name" class="col-form-label">Code Type des Produits</label>
                                         <input type="text" class="form-control" id="recipient-name"
-                                           name="id" placeholder=""  readonly="" />
+                                           name="id" ngModel="{{newType.id}}" placeholder=""  readonly="" />
                                       </div>
                                       <div class="mb-3">
                                         <label for="message-text" class="col-form-label">Type des Produits</label>
-                                        <textarea class="form-control" 
-                                          name="description" id="message-text"></textarea>
+                                        <textarea class="form-control" [(ngModel)]="newType.descripitonType" name="description" id="message-text"></textarea>
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">

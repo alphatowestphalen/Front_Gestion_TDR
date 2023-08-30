@@ -28,4 +28,12 @@ export class TypeProductService {
   public saveTypeProduct(type: TypeProduct): Observable<TypeProduct>{
     return this._http.post<TypeProduct>(this._url + "/typeProduct", type);
   }
+
+  public findById(id:number):Observable<TypeProduct>{
+    return this._http.get<TypeProduct>(this._url + "/typeProduct/"+ id);
+  }
+
+  public updateTypeProduct(type:TypeProduct):Observable<TypeProduct>{
+    return this._http.put<TypeProduct>(this._url + "/typeProduct/"+ type.id,type);
+  }
 }

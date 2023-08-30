@@ -46,9 +46,6 @@ public saveType( ):void {
 
 public setTypeProduct():void{
   if (this.searcheType.trim() !=='') {
-    console.log('====================================');
-    console.log("in thise cherche");
-    console.log('====================================');
       this.fileterType = this.listeTypeProduct.filter(item => item.descripitonType.toLocaleLowerCase().includes(this.searcheType.toLocaleLowerCase()))
   }
   else{
@@ -56,4 +53,14 @@ public setTypeProduct():void{
   }
 }
 
+public findById(id:number){
+  return this.typeProductService.findById(id).subscribe(data =>{
+    this.newType = data;
+  });
+}
+public updateTypeProduct(){
+  return this.typeProductService.updateTypeProduct(this.newType).subscribe(()=>{
+    this.getTypeProductAll();
+  })
+}
 }

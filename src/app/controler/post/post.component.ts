@@ -54,6 +54,7 @@ export class PostComponent  implements OnInit{
     )
   }
     public finByIdControler(id:number){
+      this.newPost  = {id:1, description:""}
       return this.postService.findById(id).subscribe(data =>{
      this.newPost = {id:0, description:""};
         this.newPost = data;
